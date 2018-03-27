@@ -1,0 +1,100 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+//RMX
+
+namespace HizliSiralaAlgoritmasi
+{
+    public partial class Form1 : Form
+    {
+        int quickcounter=0;
+        int[] A = new int[10];
+        int[] B = new int[100];
+        int[] C = new int[1000];
+        int[] D = new int[10000];
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ListBoxClear();
+            
+
+            //Random sayı atama
+            Random sayi = new Random();
+            
+            for (int i = 0; i < 10; i++)
+            {
+                A[i] = sayi.Next(0, 10000);
+                listBox1.Items.Add(A[i]);
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                B[i] = sayi.Next(0, 10000);
+            }
+            for (int i = 0; i < 1000; i++)
+            {
+                C[i] = sayi.Next(0, 10000);
+            }
+            for (int i = 0; i < 10000; i++)
+            {
+                D[i] = sayi.Next(0, 10000);
+            }
+            quickcounter = 0; QuickSort(A, 0, A.Length - 1);
+            for (int k = 0; k < A.Length; k++)
+                listBox2.Items.Add(A[k]);
+            quickcounter = 0;
+            QuickSort(B, 0, B.Length - 1);quickcounter = 0;
+            QuickSort(C, 0, C.Length - 1);quickcounter = 0;
+            QuickSort(D, 0, D.Length - 1);
+
+        }
+        int[] QuickSort(int[] dizi,int sol, int sag) {
+            int pivot, gecici, i,j;
+            i = sol;
+            j = sag;
+            pivot = dizi[(sol + sag) / 2];
+            do
+            {
+                while (dizi[i] < pivot && i < sag)
+                { quickcounter++; i++; }
+                while (pivot < dizi[j] && j > sol)
+                { quickcounter++; j--; }
+                if (i <= j)
+                {
+                    quickcounter++;
+                    gecici = dizi[i];
+                    dizi[i] = dizi[j];
+                    dizi[j] = gecici;
+                    i++;
+                    j--;
+                }
+            } while (i <= j);
+
+            if (sol < j) QuickSort(dizi, sol, j);
+            if (i < sag) QuickSort(dizi, i, sag);
+
+            if (dizi.Length == 10)
+                label3.Text = quickcounter.ToString();
+            if (dizi.Length == 100)
+                label4.Text = quickcounter.ToString();
+            if (dizi.Length == 1000)
+                label5.Text = quickcounter.ToString();
+            if (dizi.Length == 10000)
+                label6.Text = quickcounter.ToString();
+            return dizi;
+        }
+        void ListBoxClear() {
+            listBox1.Items.Clear();
+            listBox2.Items.Clear();
+        }
+    }
+}
